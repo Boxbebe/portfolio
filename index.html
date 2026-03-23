@@ -332,8 +332,8 @@
       <p class="contact-subtext">새로운 프로젝트, 협업 제안, 또는 간단한 인사도 환영합니다. 메시지를 남겨주시면 48시간 내에 답변드립니다.</p>
     </div>
     <div class="contact-links fade-in">
-      <a href="mailto:hello@seongwoo.kr" class="contact-link">
-        <div><span class="contact-link-label">Email</span><span class="contact-link-value">hello@seongwoo.kr</span></div>
+      <a href="/cdn-cgi/l/email-protection#4c24292020230c3f2923222b3b232362273e" class="contact-link">
+        <div><span class="contact-link-label">Email</span><span class="contact-link-value"><span class="__cf_email__" data-cfemail="fd9598919192bd8e9892939a8a9292d3968f">[email&#160;protected]</span></span></div>
         <span class="contact-link-arrow">↗</span>
       </a>
       <a href="#" class="contact-link">
@@ -357,19 +357,33 @@
   <a href="#hero" class="footer-logo">SW</a>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const html = document.documentElement;
 const toggle = document.getElementById('theme-toggle');
 const label = document.getElementById('theme-label');
 
-const saved = localStorage.getItem('theme') || 'light';
-html.setAttribute('data-theme', saved);
-label.textContent = saved === 'dark' ? 'Dark' : 'Light';
+function applyTheme(theme) {
+  html.setAttribute('data-theme', theme);
+  label.textContent = theme === 'dark' ? 'Dark' : 'Light';
+}
+
+const saved = localStorage.getItem('theme');
+if (saved) {
+  applyTheme(saved);
+} else {
+  const systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  applyTheme(systemDark ? 'dark' : 'light');
+}
+
+window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+  if (!localStorage.getItem('theme')) {
+    applyTheme(e.matches ? 'dark' : 'light');
+  }
+});
 
 toggle.addEventListener('click', () => {
   const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-  html.setAttribute('data-theme', next);
-  label.textContent = next === 'dark' ? 'Dark' : 'Light';
+  applyTheme(next);
   localStorage.setItem('theme', next);
 });
 
@@ -395,12 +409,4 @@ document.querySelectorAll('.brand-tab').forEach(tab => {
 });
 
 document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    e.preventDefault();
-    const target = document.querySelector(a.getAttribute('href'));
-    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-});
-</script>
-</body>
-</html>
+  a.
