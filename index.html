@@ -661,6 +661,26 @@
     opacity: 1; transform: translateY(0);
   }
 
+  /* ─── TOP BUTTON ─── */
+  #top-btn {
+    position: fixed; bottom: 32px; right: 32px; z-index: 200;
+    width: 48px; height: 48px;
+    background: var(--blue);
+    color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none;
+    opacity: 0; pointer-events: none;
+    transform: translateY(12px);
+    transition: opacity 0.3s, transform 0.3s, background 0.2s;
+    box-shadow: 0 4px 20px rgba(37,99,255,0.4);
+  }
+  #top-btn.visible {
+    opacity: 1; pointer-events: auto;
+    transform: translateY(0);
+  }
+  #top-btn:hover { background: var(--blue-bright); }
+
   /* ─── MOBILE ─── */
   @media (max-width: 768px) {
     .container { padding: 0 24px; }
@@ -695,7 +715,7 @@
     <li><a href="#career">Career</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <a href="mailto:jsw921211@naver.com" class="nav-contact">연락하기</a>
+  <a href="#contact" class="nav-contact">연락하기</a>
 </nav>
 
 <!-- HERO -->
@@ -1114,6 +1134,13 @@
 </section>
 
 <!-- FOOTER -->
+<!-- TOP BUTTON -->
+<a href="#hero" id="top-btn" title="맨 위로">
+  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+    <path d="M9 14V4M9 4L4 9M9 4L14 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</a>
+
 <footer>
   <div class="footer-left">SEONGWOO JANG · DIGITAL AD PORTFOLIO · 2022-2026</div>
   <div class="footer-right">jsw921211@naver.com</div>
@@ -1177,6 +1204,13 @@
     } else {
       nav.style.background = 'rgba(8,10,14,0.85)';
     }
+  });
+
+  // Top button visibility
+  const topBtn = document.getElementById('top-btn');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) topBtn.classList.add('visible');
+    else topBtn.classList.remove('visible');
   });
 
   // Stagger reveal delays
