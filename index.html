@@ -3,1220 +3,578 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SEONGWOO JANG — Digital AD Portfolio</title>
+<title>제주 3박 4일 · 우리의 여행</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+KR:wght@300;400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --blue: #2563ff;
-    --blue-bright: #4d7fff;
-    --dark: #080a0e;
-    --dark2: #0d1017;
-    --dark3: #141820;
-    --dark4: #1c2230;
-    --text: #e8eaf0;
-    --text-muted: #8a94a8;
-    --text-dim: #4a5268;
-    --border: rgba(255,255,255,0.06);
-    --border-blue: rgba(37,99,255,0.3);
+  :root{
+    --ink:#12303f;          /* 깊은 바다 남색 */
+    --sea:#1c7c8c;          /* 제주 바다 청록 */
+    --sea-light:#d7ecee;    /* 얕은 물빛 */
+    --foam:#f4f9f9;         /* 물거품 배경 */
+    --hallabong:#f2932e;    /* 감귤 주황 */
+    --hallabong-deep:#d97b14;
+    --stone:#6b7f88;        /* 현무암 회색 */
+    --line:#dbe8ea;
+    --white:#ffffff;
+    --danger:#c0492f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    font-family:'IBM Plex Sans KR',sans-serif;
+    background:var(--foam);
+    color:var(--ink);
+    line-height:1.6;
+    padding-bottom:80px;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:0 20px}
+
+  /* ---------- 헤더 ---------- */
+  header{
+    background:linear-gradient(175deg,var(--ink) 0%,#17475c 60%,var(--sea) 100%);
+    color:var(--white);
+    padding:44px 0 0;
+    position:relative;
+    overflow:hidden;
+  }
+  .eyebrow{
+    font-size:12px;letter-spacing:.35em;text-transform:uppercase;
+    color:var(--sea-light);opacity:.85;margin-bottom:10px;
+  }
+  h1{
+    font-family:'Gowun Batang',serif;
+    font-size:clamp(30px,6vw,44px);
+    font-weight:700;line-height:1.25;
+  }
+  h1 .orange{color:var(--hallabong)}
+  .dates{
+    margin-top:12px;font-size:15px;font-weight:300;color:var(--sea-light);
+  }
+  .save-state{
+    position:absolute;top:20px;right:20px;
+    font-size:12px;color:var(--sea-light);opacity:0;
+    transition:opacity .3s;
+  }
+  .save-state.show{opacity:.9}
+  /* 파도 구분선 */
+  .wave{display:block;width:100%;height:38px;margin-top:32px}
+
+  /* ---------- 항공권 ---------- */
+  .flights{margin-top:-6px}
+  .flight-card{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px 20px;
+    display:flex;align-items:center;gap:16px;
+    margin-bottom:12px;
+    box-shadow:0 2px 10px rgba(18,48,63,.05);
+  }
+  .flight-card .badge{
+    flex:0 0 auto;
+    font-size:11px;font-weight:700;letter-spacing:.08em;
+    background:var(--sea-light);color:var(--sea);
+    padding:4px 10px;border-radius:999px;white-space:nowrap;
+  }
+  .flight-card .airline{
+    flex:0 0 auto;display:flex;flex-direction:column;
+    align-items:center;gap:5px;width:86px;
+  }
+  .logo{
+    width:86px;height:40px;border-radius:8px;
+    display:flex;align-items:center;justify-content:center;
+    border:1px solid var(--line);
+    font-weight:800;letter-spacing:.01em;
+  }
+  .logo-tway{
+    background:#fff;color:#e60023;
+    font-size:19px;font-style:italic;
+    font-family:'IBM Plex Sans KR',sans-serif;
+  }
+  .logo-tway .apos{color:#12303f}
+  .logo-airseoul{
+    background:#6fbfb5;color:#fff;border-color:#6fbfb5;
+    font-size:12px;letter-spacing:.14em;
+  }
+  .flight-card .route{flex:1;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .flight-card .apt{font-family:'Gowun Batang',serif;font-size:22px;font-weight:700}
+  .flight-card .apt small{display:block;font-family:'IBM Plex Sans KR';font-size:12px;font-weight:400;color:var(--stone)}
+  .flight-card .arrow{color:var(--hallabong);font-size:18px}
+  .flight-card .meta{font-size:12px;color:var(--stone);text-align:right;line-height:1.5}
+  @media(max-width:560px){
+    .flight-card{flex-wrap:wrap}
+    .flight-card .meta{text-align:left;width:100%}
   }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* ---------- 날짜 탭 ---------- */
+  .tabs{
+    display:flex;gap:8px;margin:30px 0 18px;
+  }
+  .tab{
+    flex:1;
+    border:1px solid var(--line);
+    background:var(--white);
+    border-radius:12px;
+    padding:12px 8px;
+    text-align:center;cursor:pointer;
+    transition:all .15s;
+    font-family:inherit;
+  }
+  .tab .d{font-family:'Gowun Batang',serif;font-size:19px;font-weight:700}
+  .tab .l{font-size:12px;color:var(--stone);margin-top:2px}
+  .tab.active{
+    background:var(--ink);border-color:var(--ink);color:var(--white);
+    box-shadow:0 4px 14px rgba(18,48,63,.25);
+  }
+  .tab.active .l{color:var(--sea-light)}
+  .tab:focus-visible{outline:3px solid var(--hallabong);outline-offset:2px}
 
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--dark);
-    color: var(--text);
-    font-family: 'Noto Sans KR', sans-serif;
-    overflow-x: hidden;
+  /* ---------- 일정 리스트 ---------- */
+  .day-title{
+    font-family:'Gowun Batang',serif;font-size:20px;font-weight:700;
+    margin:26px 0 4px;
   }
-
-  /* ─── SCROLLBAR ─── */
-  ::-webkit-scrollbar { width: 4px; }
-  ::-webkit-scrollbar-track { background: var(--dark2); }
-  ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 2px; }
-
-  /* ─── LOADER ─── */
-  #loader {
-    position: fixed; inset: 0; z-index: 9999;
-    background: var(--dark);
-    display: flex; align-items: center; justify-content: center;
-    flex-direction: column; gap: 24px;
+  .day-sub{font-size:13px;color:var(--stone);margin-bottom:16px}
+  .items{list-style:none}
+  .item{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-left:4px solid var(--sea);
+    border-radius:12px;
+    padding:14px 16px;
+    margin-bottom:10px;
+    display:flex;gap:14px;align-items:flex-start;
   }
-  .loader-wave {
-    display: flex; gap: 4px; align-items: center;
+  .item.cat-food{border-left-color:var(--hallabong)}
+  .item.cat-move{border-left-color:var(--stone)}
+  .item.cat-stay{border-left-color:#7c5cbf}
+  .item.done{opacity:.55}
+  .item.done .t-title{text-decoration:line-through}
+  .item .chk{
+    flex:0 0 auto;margin-top:3px;
+    width:20px;height:20px;cursor:pointer;
+    accent-color:var(--sea);
   }
-  .loader-wave span {
-    display: block; width: 3px; border-radius: 2px;
-    background: var(--blue);
-    animation: wave 1s ease-in-out infinite;
+  .item .body{flex:1;min-width:0}
+  .t-time{
+    font-size:12px;font-weight:700;color:var(--sea);
+    letter-spacing:.04em;
   }
-  .loader-wave span:nth-child(1) { height: 20px; animation-delay: 0s; }
-  .loader-wave span:nth-child(2) { height: 40px; animation-delay: 0.1s; }
-  .loader-wave span:nth-child(3) { height: 60px; animation-delay: 0.2s; }
-  .loader-wave span:nth-child(4) { height: 40px; animation-delay: 0.3s; }
-  .loader-wave span:nth-child(5) { height: 20px; animation-delay: 0.4s; }
-  .loader-wave span:nth-child(6) { height: 40px; animation-delay: 0.5s; }
-  .loader-wave span:nth-child(7) { height: 60px; animation-delay: 0.6s; }
-  .loader-wave span:nth-child(8) { height: 40px; animation-delay: 0.7s; }
-  .loader-wave span:nth-child(9) { height: 20px; animation-delay: 0.8s; }
-  @keyframes wave {
-    0%, 100% { transform: scaleY(0.4); opacity: 0.3; }
-    50% { transform: scaleY(1); opacity: 1; }
+  .item.cat-food .t-time{color:var(--hallabong-deep)}
+  .t-title{font-size:16px;font-weight:500;word-break:keep-all}
+  .t-memo{font-size:13px;color:var(--stone);margin-top:2px;white-space:pre-wrap;word-break:keep-all}
+  .item .ops{flex:0 0 auto;display:flex;gap:2px}
+  .ops button{
+    border:none;background:none;cursor:pointer;
+    font-size:14px;color:var(--stone);
+    padding:4px 6px;border-radius:6px;
   }
-  .loader-text {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    color: var(--text-muted);
-  }
-
-  /* ─── NAV ─── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    height: 56px;
-    display: flex; align-items: center;
-    padding: 0 32px;
-    border-bottom: 1px solid var(--border);
-    background: rgba(8,10,14,0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    transition: all 0.3s;
-  }
-  .nav-logo {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    color: var(--text-muted);
-    text-transform: uppercase;
-  }
-  .nav-logo span { color: var(--blue); }
-  .nav-links {
-    margin-left: auto;
-    display: flex; gap: 32px;
-    list-style: none;
-  }
-  .nav-links a {
-    font-size: 12px;
-    color: var(--text-muted);
-    text-decoration: none;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--text); }
-  .nav-contact {
-    margin-left: 32px;
-    padding: 7px 20px;
-    background: var(--blue);
-    color: #fff;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    text-decoration: none;
-    border-radius: 4px;
-    transition: background 0.2s;
-  }
-  .nav-contact:hover { background: var(--blue-bright); }
-
-  /* ─── HERO ─── */
-  #hero {
-    min-height: 100vh;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    position: relative;
-    overflow: hidden;
-    padding-top: 56px;
+  .ops button:hover{background:var(--sea-light);color:var(--ink)}
+  .empty{
+    text-align:center;color:var(--stone);font-size:14px;
+    padding:34px 10px;border:1.5px dashed var(--line);border-radius:12px;
+    background:rgba(255,255,255,.5);
   }
 
-  .hero-bg {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
+  /* ---------- 추가/수정 폼 ---------- */
+  .add-btn{
+    width:100%;margin-top:6px;
+    border:1.5px dashed var(--sea);
+    background:rgba(28,124,140,.06);
+    color:var(--sea);font-weight:700;font-size:14px;
+    border-radius:12px;padding:13px;cursor:pointer;
+    font-family:inherit;
+    transition:background .15s;
   }
-  .hero-circle {
-    width: 600px; height: 600px;
-    border-radius: 50%;
-    border: 1px solid rgba(37,99,255,0.15);
-    position: absolute;
-    animation: rotate-circle 20s linear infinite;
+  .add-btn:hover{background:rgba(28,124,140,.12)}
+  .form{
+    background:var(--white);border:1px solid var(--sea);
+    border-radius:12px;padding:16px;margin-top:10px;
+    display:none;
   }
-  .hero-circle::before {
-    content: '';
-    position: absolute; top: -2px; left: 50%;
-    transform: translateX(-50%);
-    width: 4px; height: 4px;
-    border-radius: 50%;
-    background: var(--blue);
-    box-shadow: 0 0 12px var(--blue), 0 0 24px var(--blue);
+  .form.open{display:block}
+  .form .row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+  .form input,.form select,.form textarea{
+    font-family:inherit;font-size:14px;
+    border:1px solid var(--line);border-radius:8px;
+    padding:9px 11px;background:var(--foam);color:var(--ink);
   }
-  .hero-circle2 {
-    width: 400px; height: 400px;
-    border: 1px solid rgba(37,99,255,0.08);
-    border-radius: 50%;
-    position: absolute;
-    animation: rotate-circle 15s linear infinite reverse;
+  .form input:focus,.form select:focus,.form textarea:focus{
+    outline:2px solid var(--sea);border-color:var(--sea);
   }
-  @keyframes rotate-circle {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+  .form .f-time{width:110px}
+  .form .f-cat{width:130px}
+  .form .f-title{flex:1;min-width:180px}
+  .form textarea{width:100%;resize:vertical;min-height:52px}
+  .form .actions{display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
+  .btn{
+    font-family:inherit;font-size:14px;font-weight:700;
+    border:none;border-radius:8px;padding:9px 18px;cursor:pointer;
   }
+  .btn-save{background:var(--hallabong);color:var(--white)}
+  .btn-save:hover{background:var(--hallabong-deep)}
+  .btn-cancel{background:var(--line);color:var(--ink)}
 
-  /* wave bars behind title */
-  .wave-bg {
-    position: absolute;
-    display: flex; gap: 3px; align-items: center;
-    opacity: 0.08;
+  /* ---------- 메모 / 준비물 ---------- */
+  section.notes{margin-top:44px}
+  h2{
+    font-family:'Gowun Batang',serif;font-size:20px;font-weight:700;
+    margin-bottom:12px;
+    display:flex;align-items:center;gap:8px;
   }
-  .wave-bg span {
-    display: block; width: 3px; border-radius: 2px;
-    background: var(--blue);
+  h2::after{content:"";flex:1;height:1px;background:var(--line)}
+  .notes textarea{
+    width:100%;min-height:110px;
+    font-family:inherit;font-size:14px;line-height:1.7;
+    border:1px solid var(--line);border-radius:12px;
+    padding:14px 16px;background:var(--white);color:var(--ink);
+    resize:vertical;
   }
+  .notes textarea:focus{outline:2px solid var(--sea)}
+  .hint{font-size:12px;color:var(--stone);margin-top:6px}
 
-  .hero-content {
-    position: relative; z-index: 2;
-    text-align: center;
-    padding: 0 24px;
+  /* ---------- 지출 ---------- */
+  .exp{margin-top:34px}
+  .exp-list{list-style:none}
+  .exp-item{
+    display:flex;align-items:center;gap:12px;
+    background:var(--white);border:1px solid var(--line);
+    border-radius:10px;padding:11px 14px;margin-bottom:8px;
   }
-  .hero-eyebrow {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    color: var(--blue);
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    opacity: 0;
-    animation: fade-up 0.8s ease 0.5s forwards;
+  .exp-item .e-name{flex:1;font-size:14px;word-break:keep-all}
+  .exp-item .e-cat{
+    font-size:11px;color:var(--stone);
+    background:var(--foam);border:1px solid var(--line);
+    padding:2px 8px;border-radius:999px;white-space:nowrap;
   }
-  .hero-title {
-    font-family: 'Bebas Neue', 'Noto Sans KR', sans-serif;
-    font-size: clamp(72px, 12vw, 160px);
-    line-height: 0.9;
-    letter-spacing: 0.02em;
-    margin-bottom: 24px;
-    opacity: 0;
-    animation: fade-up 0.8s ease 0.7s forwards;
+  .exp-item .e-amt{
+    font-weight:700;font-size:15px;white-space:nowrap;
+    font-variant-numeric:tabular-nums;
   }
-  .hero-title .line1 { color: #fff; display: block; }
-  .hero-title .line2 { color: var(--blue); display: block; }
+  .exp-item .del{
+    border:none;background:none;cursor:pointer;
+    color:var(--stone);font-size:13px;padding:4px;border-radius:6px;
+  }
+  .exp-item .del:hover{background:var(--sea-light);color:var(--danger)}
+  .exp-form{
+    display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;
+  }
+  .exp-form input,.exp-form select{
+    font-family:inherit;font-size:14px;
+    border:1px solid var(--line);border-radius:8px;
+    padding:9px 11px;background:var(--white);color:var(--ink);
+  }
+  .exp-form input:focus,.exp-form select:focus{outline:2px solid var(--sea);border-color:var(--sea)}
+  .exp-form .e-f-name{flex:1;min-width:140px}
+  .exp-form .e-f-cat{width:110px}
+  .exp-form .e-f-amt{width:130px;text-align:right}
+  .exp-form .btn{white-space:nowrap}
+  .exp-totals{
+    margin-top:14px;
+    background:var(--ink);color:var(--white);
+    border-radius:12px;padding:14px 18px;
+    display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:6px;
+  }
+  .exp-totals .t-day{font-size:14px}
+  .exp-totals .t-day b{font-size:17px;margin-left:6px;font-variant-numeric:tabular-nums}
+  .exp-totals .t-trip{font-size:12px;color:var(--sea-light)}
+  .exp-totals .t-trip b{color:var(--hallabong);font-size:14px;margin-left:6px;font-variant-numeric:tabular-nums}
+  .exp-empty{font-size:13px;color:var(--stone);padding:6px 2px}
 
-  .hero-prompt {
-    display: inline-flex; align-items: center; gap: 12px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 40px;
-    padding: 12px 20px;
-    font-size: 14px;
-    color: var(--text-muted);
-    margin-bottom: 48px;
-    opacity: 0;
-    animation: fade-up 0.8s ease 0.9s forwards;
-  }
-  .hero-prompt .plus {
-    width: 24px; height: 24px;
-    background: rgba(37,99,255,0.15);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--blue); font-size: 16px;
-  }
-  .hero-prompt .cursor {
-    display: inline-block;
-    background: var(--blue);
-    width: 2px; height: 14px;
-    vertical-align: middle;
-    margin-left: 4px;
-    animation: blink 1s step-end infinite;
-  }
-  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
-
-  .hero-meta {
-    display: flex; gap: 48px; justify-content: center;
-    opacity: 0;
-    animation: fade-up 0.8s ease 1.1s forwards;
-  }
-  .hero-meta-item {
-    text-align: left;
-  }
-  .hero-meta-label {
-    font-size: 11px; letter-spacing: 0.1em;
-    color: var(--text-dim); text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-  .hero-meta-value {
-    font-size: 13px; color: var(--text-muted);
-  }
-
-  .hero-corners {
-    position: absolute; inset: 0;
-    pointer-events: none;
-    display: flex; align-items: flex-end; justify-content: space-between;
-    padding: 32px;
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    color: var(--text-dim);
-    opacity: 0;
-    animation: fade-in 1s ease 1.3s forwards;
-  }
-
-  @keyframes fade-up {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes fade-in {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  .scroll-hint {
-    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
-    display: flex; flex-direction: column; align-items: center; gap: 8px;
-    opacity: 0;
-    animation: fade-in 1s ease 1.5s forwards;
-  }
-  .scroll-line {
-    width: 1px; height: 40px;
-    background: linear-gradient(to bottom, transparent, var(--blue));
-    animation: scroll-anim 2s ease-in-out infinite;
-  }
-  @keyframes scroll-anim {
-    0%, 100% { transform: scaleY(0); transform-origin: top; }
-    50% { transform: scaleY(1); }
-  }
-
-  /* ─── SECTION BASE ─── */
-  section { padding: 100px 0; }
-  .container { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
-
-  .section-header {
-    display: flex; align-items: baseline; gap: 20px;
-    margin-bottom: 60px;
-  }
-  .section-tag {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px; letter-spacing: 0.2em;
-    color: var(--blue); text-transform: uppercase;
-  }
-  .section-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 56px; letter-spacing: 0.02em;
-    color: #fff;
-  }
-  .section-divider {
-    flex: 1; height: 1px;
-    background: var(--border);
-    margin-left: 20px;
-  }
-
-  /* ─── ABOUT ─── */
-  #about { background: var(--dark2); }
-  .about-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 80px;
-    align-items: start;
-  }
-  .about-tagline {
-    font-size: 32px; font-weight: 700; line-height: 1.4;
-    margin-bottom: 24px;
-  }
-  .about-tagline em {
-    font-style: normal;
-    color: var(--blue);
-    position: relative;
-  }
-  .about-tagline em::after {
-    content: '';
-    position: absolute; bottom: 2px; left: 0; right: 0;
-    height: 2px;
-    background: var(--blue);
-    opacity: 0.4;
-  }
-  .about-desc {
-    font-size: 15px; line-height: 1.8;
-    color: var(--text-muted);
-    margin-bottom: 32px;
-  }
-  .about-info {
-    display: flex; flex-direction: column; gap: 12px;
-  }
-  .about-info-row {
-    display: flex; gap: 16px;
-    align-items: center;
-    font-size: 13px;
-  }
-  .about-info-label {
-    color: var(--text-dim);
-    min-width: 60px;
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-  }
-  .about-info-value { color: var(--text-muted); }
-
-  .about-skills-grid {
-    display: flex; flex-direction: column; gap: 24px;
-  }
-  .skill-category {
-    padding: 24px;
-    background: var(--dark3);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-  }
-  .skill-category-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px; letter-spacing: 0.2em;
-    color: var(--text-dim); text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-  .skill-tags {
-    display: flex; flex-wrap: wrap; gap: 8px;
-  }
-  .skill-tag {
-    padding: 5px 12px;
-    background: rgba(37,99,255,0.08);
-    border: 1px solid rgba(37,99,255,0.2);
-    border-radius: 4px;
-    font-size: 12px;
-    color: var(--blue-bright);
-    font-weight: 500;
-  }
-  .skill-tag.neutral {
-    background: rgba(255,255,255,0.03);
-    border-color: var(--border);
-    color: var(--text-muted);
-  }
-  .skill-tag.highlight {
-    background: var(--blue);
-    border-color: var(--blue);
-    color: #fff;
-  }
-
-  /* ─── INDEX / WORKS ─── */
-  #works { background: var(--dark); }
-
-  .works-filter {
-    display: flex; gap: 8px; margin-bottom: 48px;
-    flex-wrap: wrap;
-  }
-  .filter-btn {
-    padding: 8px 20px;
-    background: transparent;
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    color: var(--text-muted);
-    font-family: 'Noto Sans KR', sans-serif;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .filter-btn:hover {
-    border-color: rgba(37,99,255,0.4);
-    color: var(--text);
-  }
-  .filter-btn.active {
-    background: var(--blue);
-    border-color: var(--blue);
-    color: #fff;
-  }
-
-  .works-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-  }
-
-  .work-card {
-    position: relative;
-    background: var(--dark3);
-    overflow: hidden;
-    cursor: pointer;
-    transition: transform 0.3s;
-    aspect-ratio: 16/10;
-  }
-  .work-card:hover { z-index: 2; transform: scale(1.02); }
-
-  .work-card-inner {
-    position: absolute; inset: 0;
-    display: flex; flex-direction: column;
-    justify-content: flex-end;
-    padding: 24px;
-    background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 50%, transparent 100%);
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-  .work-card:hover .work-card-inner { opacity: 1; }
-
-  .work-card-bg {
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px; color: var(--text-dim);
-    letter-spacing: 0.1em;
-  }
-  /* different colored bg per card */
-  .work-card[data-cat="proposal"] .work-card-bg { background: var(--dark3); }
-  .work-card[data-cat="promotion"] .work-card-bg { background: #0d1520; }
-  .work-card[data-cat="games"] .work-card-bg { background: #100d1a; }
-
-  .work-card-brand {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px; letter-spacing: 0.2em;
-    color: var(--blue); text-transform: uppercase;
-    margin-bottom: 6px;
-  }
-  .work-card-title {
-    font-size: 16px; font-weight: 700;
-    margin-bottom: 8px;
-  }
-  .work-card-desc {
-    font-size: 12px; color: var(--text-muted);
-    line-height: 1.5;
-  }
-  .work-card-tag {
-    position: absolute; top: 16px; right: 16px;
-    padding: 4px 10px;
-    border-radius: 3px;
-    font-size: 10px; letter-spacing: 0.1em;
-    font-weight: 700;
-    text-transform: uppercase;
-  }
-  .work-card-tag.proposal { background: rgba(37,99,255,0.2); color: var(--blue-bright); border: 1px solid rgba(37,99,255,0.3); }
-  .work-card-tag.promotion { background: rgba(220,160,50,0.15); color: #dca032; border: 1px solid rgba(220,160,50,0.3); }
-  .work-card-tag.games { background: rgba(160,80,220,0.15); color: #b06ae8; border: 1px solid rgba(160,80,220,0.3); }
-  .work-card-tag.ai { background: rgba(37,200,120,0.15); color: #25c878; border: 1px solid rgba(37,200,120,0.3); }
-
-  /* visual placeholder patterns */
-  .card-pattern {
-    position: absolute; inset: 0;
-    opacity: 0.25;
-  }
-
-  /* ─── WORKS LIST SECTION ─── */
-  .works-list {
-    display: flex; flex-direction: column; gap: 0;
-    margin-top: 2px;
-  }
-  .work-list-item {
-    display: flex; align-items: center;
-    padding: 20px 24px;
-    border-bottom: 1px solid var(--border);
-    transition: background 0.2s;
-    cursor: pointer;
-    gap: 24px;
-  }
-  .work-list-item:hover { background: rgba(255,255,255,0.02); }
-  .work-list-num {
-    font-family: 'Space Mono', monospace;
-    font-size: 12px; color: var(--text-dim);
-    min-width: 32px;
-  }
-  .work-list-brand {
-    min-width: 140px;
-    font-size: 14px; font-weight: 500;
-  }
-  .work-list-title {
-    flex: 1; font-size: 13px; color: var(--text-muted);
-  }
-  .work-list-type {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px; letter-spacing: 0.1em;
-    color: var(--text-dim);
-    text-transform: uppercase;
-  }
-  .work-list-ai {
-    padding: 3px 8px;
-    background: rgba(37,200,120,0.1);
-    border: 1px solid rgba(37,200,120,0.2);
-    border-radius: 3px;
-    font-size: 10px; color: #25c878;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-  }
-
-  /* ─── CAREER ─── */
-  #career { background: var(--dark2); }
-  .career-timeline {
-    position: relative;
-    padding-left: 32px;
-    display: flex; flex-direction: column; gap: 0;
-  }
-  .career-timeline::before {
-    content: '';
-    position: absolute; left: 0; top: 8px; bottom: 8px;
-    width: 1px;
-    background: linear-gradient(to bottom, var(--blue), rgba(37,99,255,0.1));
-  }
-  .career-item {
-    position: relative;
-    padding: 32px 0 32px 32px;
-    border-bottom: 1px solid var(--border);
-  }
-  .career-item::before {
-    content: '';
-    position: absolute; left: -5px; top: 40px;
-    width: 9px; height: 9px;
-    border-radius: 50%;
-    background: var(--blue);
-    box-shadow: 0 0 0 3px rgba(37,99,255,0.2), 0 0 0 6px rgba(37,99,255,0.05);
-  }
-  .career-period {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px; color: var(--blue);
-    letter-spacing: 0.1em; margin-bottom: 8px;
-  }
-  .career-company {
-    font-size: 20px; font-weight: 700; margin-bottom: 4px;
-  }
-  .career-role {
-    font-size: 13px; color: var(--text-muted); margin-bottom: 16px;
-  }
-  .career-items {
-    display: flex; flex-direction: column; gap: 6px;
-  }
-  .career-bullet {
-    display: flex; gap: 12px; align-items: flex-start;
-    font-size: 13px; color: var(--text-muted); line-height: 1.6;
-  }
-  .career-bullet::before {
-    content: '→';
-    color: var(--blue); flex-shrink: 0;
-    margin-top: 1px;
-  }
-
-  /* ─── CONTACT ─── */
-  #contact {
-    background: var(--dark);
-    min-height: 60vh;
-    display: flex; align-items: center;
-  }
-  .contact-inner {
-    text-align: center;
-    width: 100%;
-  }
-  .contact-title {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(48px, 8vw, 120px);
-    line-height: 1;
-    margin-bottom: 16px;
-  }
-  .contact-title span { color: var(--blue); }
-  .contact-sub {
-    font-size: 15px; color: var(--text-muted);
-    margin-bottom: 48px;
-  }
-  .contact-cards {
-    display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
-  }
-  .contact-card {
-    display: flex; align-items: center; gap: 16px;
-    padding: 20px 32px;
-    background: var(--dark3);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    text-decoration: none;
-    transition: all 0.25s;
-    min-width: 260px;
-  }
-  .contact-card:hover {
-    border-color: var(--blue);
-    background: rgba(37,99,255,0.06);
-    transform: translateY(-2px);
-  }
-  .contact-card-icon {
-    width: 48px; height: 48px;
-    background: var(--blue);
-    border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px; flex-shrink: 0;
-  }
-  .contact-card-label {
-    font-size: 11px; color: var(--text-dim); letter-spacing: 0.1em;
-    text-transform: uppercase; margin-bottom: 4px;
-  }
-  .contact-card-value {
-    font-size: 15px; font-weight: 500; color: var(--text);
-  }
-
-  /* ─── FOOTER ─── */
-  footer {
-    padding: 24px 48px;
-    background: var(--dark2);
-    border-top: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .footer-left {
-    font-family: 'Space Mono', monospace;
-    font-size: 11px; color: var(--text-dim); letter-spacing: 0.1em;
-  }
-  .footer-right {
-    font-size: 12px; color: var(--text-dim);
-  }
-
-  /* ─── REVEAL ANIMATION ─── */
-  .reveal {
-    opacity: 0; transform: translateY(32px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal.visible {
-    opacity: 1; transform: translateY(0);
-  }
-
-  /* ─── TOP BUTTON ─── */
-  #top-btn {
-    position: fixed; bottom: 32px; right: 32px; z-index: 200;
-    width: 48px; height: 48px;
-    background: var(--blue);
-    color: #fff;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    text-decoration: none;
-    opacity: 0; pointer-events: none;
-    transform: translateY(12px);
-    transition: opacity 0.3s, transform 0.3s, background 0.2s;
-    box-shadow: 0 4px 20px rgba(37,99,255,0.4);
-  }
-  #top-btn.visible {
-    opacity: 1; pointer-events: auto;
-    transform: translateY(0);
-  }
-  #top-btn:hover { background: var(--blue-bright); }
-
-  /* ─── MOBILE ─── */
-  @media (max-width: 768px) {
-    .container { padding: 0 24px; }
-    .about-grid { grid-template-columns: 1fr; gap: 40px; }
-    .works-grid { grid-template-columns: 1fr 1fr; }
-    nav { padding: 0 20px; }
-    .nav-links { display: none; }
-    .hero-meta { flex-direction: column; gap: 16px; text-align: center; }
-    .hero-meta-item { text-align: center; }
-    footer { flex-direction: column; gap: 8px; text-align: center; }
-    .works-grid { grid-template-columns: 1fr; }
-  }
+  footer{
+    margin-top:56px;text-align:center;
+    font-size:12px;color:var(--stone);
+  }
+  footer .gull{font-family:'Gowun Batang',serif;font-size:15px;color:var(--sea)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 
-<!-- LOADER -->
-<div id="loader">
-  <div class="loader-wave">
-    <span></span><span></span><span></span><span></span><span></span>
-    <span></span><span></span><span></span><span></span>
+<header>
+  <div class="wrap">
+    <div class="save-state" id="saveState">저장됨 ✓</div>
+    <div class="eyebrow">2026. 07. 22 — 07. 25</div>
+    <h1>제주 <span class="orange">3박 4일</span>,<br>둘이서 바다로</h1>
+    <div class="dates">스노클링은 한적한 곳에서 · 일정은 이 페이지에서 같이 채워요</div>
   </div>
-  <div class="loader-text">VOICE : SEONG WOO — LOADING</div>
-</div>
-
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">SEONGWOO <span>JANG</span></div>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#works">Works</a></li>
-    <li><a href="#career">Career</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <a href="#contact" class="nav-contact">연락하기</a>
-</nav>
-
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-bg">
-    <div class="hero-circle"></div>
-    <div class="hero-circle2"></div>
-    <!-- wave decorations -->
-    <div class="wave-bg" style="left:0; right:0; height:100%; overflow:hidden;">
-      <svg width="100%" height="100%" viewBox="0 0 1920 1080" preserveAspectRatio="none" style="position:absolute;inset:0;width:100%;height:100%;">
-        <polyline points="0,540 100,400 200,600 300,300 400,700 500,350 600,580 700,420 800,620 900,380 1000,560 1100,440 1200,640 1300,360 1400,600 1500,460 1600,580 1700,420 1800,560 1920,480" fill="none" stroke="rgba(37,99,255,0.12)" stroke-width="1.5"/>
-        <polyline points="0,540 100,620 200,480 300,660 400,440 500,700 600,500 700,620 800,460 900,680 1000,500 1100,640 1200,480 1300,680 1400,460 1500,620 1600,500 1700,660 1800,480 1920,600" fill="none" stroke="rgba(37,99,255,0.07)" stroke-width="1"/>
-      </svg>
-    </div>
-  </div>
-
-  <div class="hero-content">
-    <div class="hero-eyebrow">Digital AD Portfolio · 2022-2026</div>
-    <h1 class="hero-title">
-      <span class="line1">VOICE :</span>
-      <span class="line2">SEONG WOO</span>
-    </h1>
-    <div class="hero-prompt">
-      <div class="plus">+</div>
-      <span>장성우를 생성합니다<span class="cursor"></span></span>
-    </div>
-    <div class="hero-meta">
-      <div class="hero-meta-item">
-        <div class="hero-meta-label">경력</div>
-        <div class="hero-meta-value">디지털퍼스트 · 픽스타임 · AI플랫폼</div>
-      </div>
-      <div class="hero-meta-item">
-        <div class="hero-meta-label">전문성</div>
-        <div class="hero-meta-value">광고 · AI · 콘텐츠 · 커머스</div>
-      </div>
-      <div class="hero-meta-item">
-        <div class="hero-meta-label">도구</div>
-        <div class="hero-meta-value">Adobe · 미드저니 · Fal · Figma</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="hero-corners">
-    <div>2022-2026</div>
-    <div>Digital AD Portfolio</div>
-  </div>
-  <div class="scroll-hint">
-    <div class="scroll-line"></div>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about">
-  <div class="container">
-    <div class="section-header reveal">
-      <span class="section-tag">01</span>
-      <h2 class="section-title">ABOUT</h2>
-      <div class="section-divider"></div>
-    </div>
-    <div class="about-grid">
-      <div class="reveal">
-        <h3 class="about-tagline">
-          <em>장성우,</em><br>계속 생성중입니다.
-        </h3>
-        <p class="about-desc">
-          8년의 광고 디자인, AI로 다시 생성합니다.<br>
-          브랜드의 목소리를 찾아 퍼포먼스로 연결하는 크리에이터입니다.<br>
-          AI를 도구 삼아 기존 크리에이티브의 한계를 확장하고, 
-          전략과 디자인 사이의 경계를 탐구합니다.
-        </p>
-        <div class="about-info">
-          <div class="about-info-row">
-            <span class="about-info-label">생년월일</span>
-            <span class="about-info-value">1992.12.11</span>
-          </div>
-          <div class="about-info-row">
-            <span class="about-info-label">연락처</span>
-            <span class="about-info-value">+82 10 2608 8070</span>
-          </div>
-          <div class="about-info-row">
-            <span class="about-info-label">이메일</span>
-            <span class="about-info-value">jsw921211@naver.com</span>
-          </div>
-        </div>
-      </div>
-      <div class="about-skills-grid reveal">
-        <div class="skill-category">
-          <div class="skill-category-label">전문성</div>
-          <div class="skill-tags">
-            <span class="skill-tag highlight">광고</span>
-            <span class="skill-tag highlight">AI</span>
-            <span class="skill-tag">콘텐츠</span>
-            <span class="skill-tag">커머스</span>
-            <span class="skill-tag">DA/SNS</span>
-            <span class="skill-tag">브랜딩</span>
-          </div>
-        </div>
-        <div class="skill-category">
-          <div class="skill-category-label">도구</div>
-          <div class="skill-tags">
-            <span class="skill-tag neutral">Adobe CC</span>
-            <span class="skill-tag neutral">Figma</span>
-            <span class="skill-tag highlight">Midjourney</span>
-            <span class="skill-tag highlight">Fal AI</span>
-            <span class="skill-tag neutral">Premiere Pro</span>
-            <span class="skill-tag neutral">After Effects</span>
-          </div>
-        </div>
-        <div class="skill-category">
-          <div class="skill-category-label">성격</div>
-          <div class="skill-tags">
-            <span class="skill-tag neutral">브랜드 맞춤</span>
-            <span class="skill-tag neutral">디테일에 진심</span>
-            <span class="skill-tag neutral">알잘딱깔센</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- WORKS -->
-<section id="works">
-  <div class="container">
-    <div class="section-header reveal">
-      <span class="section-tag">02</span>
-      <h2 class="section-title">WORKS</h2>
-      <div class="section-divider"></div>
-    </div>
-
-    <!-- Filter -->
-    <div class="works-filter reveal">
-      <button class="filter-btn active" data-filter="all">ALL</button>
-      <button class="filter-btn" data-filter="proposal">PROPOSAL</button>
-      <button class="filter-btn" data-filter="promotion">PROMOTION</button>
-      <button class="filter-btn" data-filter="games">GAMES</button>
-    </div>
-
-    <!-- Featured grid -->
-    <div class="works-grid" id="works-grid">
-
-      <!-- PROPOSAL -->
-      <div class="work-card" data-cat="proposal">
-        <div class="work-card-bg">
-          <svg width="100%" height="100%" viewBox="0 0 400 250" style="position:absolute;inset:0;opacity:0.4">
-            <rect x="40" y="60" width="120" height="130" rx="4" fill="none" stroke="#2563ff" stroke-width="0.5"/>
-            <rect x="60" y="80" width="80" height="8" rx="2" fill="#2563ff" opacity="0.5"/>
-            <rect x="60" y="96" width="60" height="6" rx="2" fill="#2563ff" opacity="0.3"/>
-            <rect x="60" y="108" width="70" height="6" rx="2" fill="#2563ff" opacity="0.2"/>
-            <circle cx="280" cy="125" r="60" fill="none" stroke="#2563ff" stroke-width="0.5"/>
-            <text x="240" y="100" fill="#2563ff" font-size="28" font-weight="bold" opacity="0.6">1위</text>
-          </svg>
-        </div>
-        <span class="work-card-tag proposal">Proposal</span>
-        <div class="work-card-inner">
-          <div class="work-card-brand">삼성자산운용</div>
-          <div class="work-card-title">KODEX ETF 퍼포먼스 크리에이티브</div>
-          <div class="work-card-desc">개인 순매수 증대를 위한 DA Banner / Page</div>
-        </div>
-      </div>
-
-      <div class="work-card" data-cat="proposal">
-        <div class="work-card-bg">
-          <svg width="100%" height="100%" viewBox="0 0 400 250" style="position:absolute;inset:0;opacity:0.5">
-            <rect x="30" y="40" width="160" height="170" rx="4" fill="none" stroke="#ff6b8a" stroke-width="0.5"/>
-            <rect x="50" y="60" width="120" height="120" rx="2" fill="rgba(255,107,138,0.08)"/>
-            <text x="55" y="130" fill="#ff6b8a" font-size="40" font-weight="bold" opacity="0.7">K</text>
-            <text x="90" y="130" fill="#ff6b8a" font-size="40" font-weight="bold" opacity="0.5">A</text>
-            <text x="125" y="130" fill="#ff6b8a" font-size="40" font-weight="bold" opacity="0.3">H</text>
-            <rect x="220" y="60" width="140" height="80" rx="4" fill="none" stroke="#ff6b8a" stroke-width="0.5"/>
-            <text x="240" y="110" fill="#ff6b8a" font-size="22" font-weight="bold" opacity="0.7">63%</text>
-          </svg>
-        </div>
-        <span class="work-card-tag proposal">Proposal</span>
-        <div class="work-card-inner">
-          <div class="work-card-brand">KAHI</div>
-          <div class="work-card-title">프로모션 포인트 직관 전달 크리에이티브</div>
-          <div class="work-card-desc">DA Banner / SNS — AI 활용 표현 한계 확장</div>
-        </div>
-      </div>
-
-      <div class="work-card" data-cat="proposal">
-        <div class="work-card-bg">
-          <svg width="100%" height="100%" viewBox="0 0 400 250" style="position:absolute;inset:0;opacity:0.4">
-            <rect x="20" y="30" width="360" height="190" rx="4" fill="none" stroke="#4488ff" stroke-width="0.5"/>
-            <text x="50" y="120" fill="#4488ff" font-size="14" opacity="0.7">아이디·록몰</text>
-            <rect x="180" y="50" width="180" height="140" rx="4" fill="rgba(68,136,255,0.05)" stroke="#4488ff" stroke-width="0.3"/>
-          </svg>
-        </div>
-        <span class="work-card-tag proposal">Proposal</span>
-        <div class="work-card-inner">
-          <div class="work-card-brand">아이디록몰</div>
-          <div class="work-card-title">DA/SNS 광고 크리에이티브</div>
-          <div class="work-card-desc">Generative AI 활용 제작</div>
-        </div>
-      </div>
-
-      <!-- PROMOTION -->
-      <div class="work-card" data-cat="promotion">
-        <div class="work-card-bg" style="background:#0d1520;">
-          <svg width="100%" height="100%" viewBox="0 0 400 250" style="position:absolute;inset:0;opacity:0.5">
-            <rect x="30" y="30" width="160" height="190" rx="4" fill="none" stroke="#dca032" stroke-width="0.5"/>
-            <text x="50" y="90" fill="#dca032" font-size="13" opacity="0.8">현대카드</text>
-            <rect x="45" y="100" width="130" height="80" rx="2" fill="rgba(220,160,50,0.06)"/>
-            <rect x="220" y="30" width="150" height="190" rx="4" fill="none" stroke="#dca032" stroke-width="0.3"/>
-            <circle cx="295" cy="125" r="40" fill="none" stroke="#dca032" stroke-width="0.4" opacity="0.5"/>
-          </svg>
-        </div>
-        <span class="work-card-tag promotion">Promotion</span>
-        <div class="work-card-inner">
-          <div class="work-card-brand">현대카드</div>
-          <div class="work-card-title">DA Banner / Campaign</div>
-          <div class="work-card-desc">퍼포먼스 중심 프로모션 크리에이티브</div>
-        </div>
-      </div>
-
-      <div class="work-card" data-cat="promotion">
-        <div class="work-card-bg" style="background:#0d1520;">
-          <svg width="100%" height="100%" viewBox="0 0 400 250" style="position:absolute;inset:0;opacity:0.5">
-            <circle cx="100" cy="125" r="70" fill="none" stroke="#dca032" stroke-width="0.5"/>
-            <text x="65" y="130" fill="#dca032" font-size="18" opacity="0.7">AXA</text>
-            <rect x="200" y="40" width="170" height="170" rx="4" fill="none" stroke="#dca032" stroke-width="0.3"/>
-            <text x="215" y="130" fill="#dca032" font-size="32" font-weight="bold" opacity="0.5">보험</text>
-          </svg>
-        </div>
-        <span class="work-card-tag promotion">Promotion</span>
-        <div class="work-card-inner">
-          <div class="work-card-brand">AXA</div>
-          <div class="work-card-title">프로모션 배너 크리에이티브</div>
-          <div class="work-card-desc">보험 상품 전환 유도 디지털 광고</div>
-        </div>
-      </div>
-
-      <div class="work-card" data-cat="promotion">
-        <div class="work-card-bg" style="background:#0d1520;">
-          <svg width="100%" height="100%" viewBox="0 0 400 250" style="position:absolute;inset:0;opacity:0.4">
-            <rect x="30" y="30" width="340" height="190" rx="4" fill="none" stroke="#dca032" stroke-width="0.3"/>
-            <text x="60" y="100" fill="#dca032" font-size="24" opacity="0.7">쿠팡플</text>
-            <text x="60" y="130" fill="#dca032" font-size="24" opacity="0.7">필먼트</text>
-          </svg>
-        </div>
-        <span class="work-card-tag promotion">Promotion</span>
-        <div class="work-card-inner">
-          <div class="work-card-brand">쿠팡풀필먼트</div>
-          <div class="work-card-title">DA Banner Campaign</div>
-          <div class="work-card-desc">물류 서비스 프로모션 디지털 광고</div>
-        </div>
-      </div>
-
-      <!-- GAMES -->
-      <div class="work-card" data-cat="games">
-        <div class="work-card-bg" style="background:#100d1a;">
-          <svg width="100%" height="100%" viewBox="0 0 400 250" style="position:absolute;inset:0;opacity:0.5">
-            <rect x="30" y="30" width="340" height="190" rx="4" fill="none" stroke="#b06ae8" stroke-width="0.5"/>
-            <text x="60" y="110" fill="#b06ae8" font-size="32" font-weight="bold" opacity="0.7">ZENONIA</text>
-            <text x="60" y="140" fill="#b06ae8" font-size="14" opacity="0.4">제노니아</text>
-          </svg>
-        </div>
-        <span class="work-card-tag games">Games</span>
-        <div class="work-card-inner">
-          <div class="work-card-brand">게임빌 / Com2uS</div>
-          <div class="work-card-title">제노니아 게임 광고 크리에이티브</div>
-          <div class="work-card-desc">DA Banner / Campaign</div>
-        </div>
-      </div>
-
-      <div class="work-card" data-cat="games">
-        <div class="work-card-bg" style="background:#100d1a;">
-          <svg width="100%" height="100%" viewBox="0 0 400 250" style="position:absolute;inset:0;opacity:0.5">
-            <polygon points="200,30 340,125 200,220 60,125" fill="none" stroke="#b06ae8" stroke-width="0.5"/>
-            <text x="155" y="135" fill="#b06ae8" font-size="16" opacity="0.7">스피릿테일즈</text>
-          </svg>
-        </div>
-        <span class="work-card-tag games">Games</span>
-        <div class="work-card-inner">
-          <div class="work-card-brand">스피릿테일즈</div>
-          <div class="work-card-title">게임 DA 광고 크리에이티브</div>
-          <div class="work-card-desc">퍼포먼스 중심 게임 광고</div>
-        </div>
-      </div>
-
-      <!-- AI Platform -->
-      <div class="work-card" data-cat="proposal">
-        <div class="work-card-bg" style="background:#081a10;">
-          <svg width="100%" height="100%" viewBox="0 0 400 250" style="position:absolute;inset:0;opacity:0.5">
-            <rect x="30" y="30" width="340" height="190" rx="4" fill="none" stroke="#25c878" stroke-width="0.5"/>
-            <text x="50" y="100" fill="#25c878" font-size="20" font-weight="bold" opacity="0.8">FIXFOLIO</text>
-            <text x="50" y="125" fill="#25c878" font-size="11" opacity="0.5">AI Platform</text>
-            <circle cx="300" cy="125" r="50" fill="none" stroke="#25c878" stroke-width="0.3"/>
-          </svg>
-        </div>
-        <span class="work-card-tag ai">AI</span>
-        <div class="work-card-inner">
-          <div class="work-card-brand">픽스폴리오 / FIXTYPE</div>
-          <div class="work-card-title">AI 플랫폼 국내·글로벌 런칭</div>
-          <div class="work-card-desc">AI 기반 REF제작 및 프로젝트 참여</div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- Full works list -->
-    <div style="margin-top: 48px;" class="reveal">
-      <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:0.2em;color:var(--text-dim);text-transform:uppercase;margin-bottom:16px;">전체 작업 목록</div>
-      <div class="works-list">
-        <!-- PROPOSAL -->
-        <div class="work-list-item"><span class="work-list-num">P01</span><span class="work-list-brand">삼성자산운용</span><span class="work-list-title">KODEX ETF 개인 순매수 증대 크리에이티브</span><span class="work-list-type">DA · Page</span><span class="work-list-ai">AI</span></div>
-        <div class="work-list-item"><span class="work-list-num">P02</span><span class="work-list-brand">가히 (KAHI)</span><span class="work-list-title">프로모션 포인트 주목도 극대화</span><span class="work-list-type">DA · SNS</span><span class="work-list-ai">AI</span></div>
-        <div class="work-list-item"><span class="work-list-num">P03</span><span class="work-list-brand">아이디록몰</span><span class="work-list-title">DA/SNS 광고 크리에이티브</span><span class="work-list-type">DA · SNS</span><span class="work-list-ai">AI</span></div>
-        <div class="work-list-item"><span class="work-list-num">P04</span><span class="work-list-brand">마이브라운</span><span class="work-list-title">DA Banner Campaign</span><span class="work-list-type">DA</span><span class="work-list-ai">AI</span></div>
-        <div class="work-list-item"><span class="work-list-num">P05</span><span class="work-list-brand">삼성전자뉴스룸</span><span class="work-list-title">DA/SNS 크리에이티브</span><span class="work-list-type">DA · SNS</span><span class="work-list-ai">AI</span></div>
-        <div class="work-list-item"><span class="work-list-num">P06</span><span class="work-list-brand">쿠쿠전자</span><span class="work-list-title">브랜드 톤앤매너 조화 크리에이티브</span><span class="work-list-type">DA · Video</span><span class="work-list-ai">AI</span></div>
-        <div class="work-list-item"><span class="work-list-num">P07</span><span class="work-list-brand">카카오페이증권</span><span class="work-list-title">금융 DA 광고 크리에이티브</span><span class="work-list-type">DA · SNS</span><span class="work-list-ai">AI</span></div>
-        <div class="work-list-item"><span class="work-list-num">P08</span><span class="work-list-brand">현대카드</span><span class="work-list-title">프로모션 배너 크리에이티브</span><span class="work-list-type">DA</span><span class="work-list-ai">AI</span></div>
-        <div class="work-list-item"><span class="work-list-num">P09</span><span class="work-list-brand">AXA</span><span class="work-list-title">보험 상품 전환 유도 광고</span><span class="work-list-type">DA</span></div>
-        <div class="work-list-item"><span class="work-list-num">P10</span><span class="work-list-brand">쿠팡풀필먼트</span><span class="work-list-title">물류 서비스 프로모션</span><span class="work-list-type">DA</span></div>
-        <div class="work-list-item"><span class="work-list-num">P11</span><span class="work-list-brand">KB차차차</span><span class="work-list-title">중고차 플랫폼 DA 광고</span><span class="work-list-type">DA</span></div>
-        <div class="work-list-item"><span class="work-list-num">P12</span><span class="work-list-brand">SBI</span><span class="work-list-title">금융 DA 크리에이티브</span><span class="work-list-type">DA</span></div>
-        <div class="work-list-item"><span class="work-list-num">P13</span><span class="work-list-brand">알리익스프레스</span><span class="work-list-title">커머스 프로모션 배너</span><span class="work-list-type">DA</span></div>
-        <!-- PROMOTION -->
-        <div class="work-list-item"><span class="work-list-num">R01</span><span class="work-list-brand">현대카드</span><span class="work-list-title">프로모션 DA 배너</span><span class="work-list-type">DA · Banner</span><span class="work-list-ai">AI</span></div>
-        <div class="work-list-item"><span class="work-list-num">R02</span><span class="work-list-brand">대상웰라이프</span><span class="work-list-title">건강식품 프로모션</span><span class="work-list-type">DA · SNS</span></div>
-        <div class="work-list-item"><span class="work-list-num">R03</span><span class="work-list-brand">쿠팡풀필먼트</span><span class="work-list-title">물류 프로모션 캠페인</span><span class="work-list-type">DA</span></div>
-        <div class="work-list-item"><span class="work-list-num">R04</span><span class="work-list-brand">AXA</span><span class="work-list-title">보험 프로모션 캠페인</span><span class="work-list-type">DA</span></div>
-        <div class="work-list-item"><span class="work-list-num">R05</span><span class="work-list-brand">토코보</span><span class="work-list-title">이커머스 프로모션</span><span class="work-list-type">DA</span></div>
-        <div class="work-list-item"><span class="work-list-num">R06</span><span class="work-list-brand">코빗</span><span class="work-list-title">가상자산 거래소 프로모션</span><span class="work-list-type">DA · SNS</span></div>
-        <div class="work-list-item"><span class="work-list-num">R07</span><span class="work-list-brand">가히 (KAHI)</span><span class="work-list-title">시즌별 프로모션 캠페인</span><span class="work-list-type">DA · Video</span><span class="work-list-ai">AI</span></div>
-        <div class="work-list-item"><span class="work-list-num">R08</span><span class="work-list-brand">종근당</span><span class="work-list-title">제약 브랜드 프로모션</span><span class="work-list-type">DA</span></div>
-        <div class="work-list-item"><span class="work-list-num">R09</span><span class="work-list-brand">대교 마카다미아</span><span class="work-list-title">식품 프로모션 캠페인</span><span class="work-list-type">DA</span></div>
-        <div class="work-list-item"><span class="work-list-num">R10</span><span class="work-list-brand">SK렌터카</span><span class="work-list-title">렌터카 서비스 프로모션</span><span class="work-list-type">DA</span></div>
-        <!-- GAMES -->
-        <div class="work-list-item"><span class="work-list-num">G01</span><span class="work-list-brand">제노니아</span><span class="work-list-title">게임 DA 광고 크리에이티브</span><span class="work-list-type">DA · Video</span></div>
-        <div class="work-list-item"><span class="work-list-num">G02</span><span class="work-list-brand">스피릿테일즈</span><span class="work-list-title">게임 DA 퍼포먼스 광고</span><span class="work-list-type">DA</span></div>
-        <div class="work-list-item"><span class="work-list-num">G03</span><span class="work-list-brand">창세기전</span><span class="work-list-title">레트로 RPG 게임 광고</span><span class="work-list-type">DA</span></div>
-        <div class="work-list-item"><span class="work-list-num">G04</span><span class="work-list-brand">트리플판타지</span><span class="work-list-title">모바일 게임 광고</span><span class="work-list-type">DA</span></div>
-        <div class="work-list-item"><span class="work-list-num">G05</span><span class="work-list-brand">브라운더스트</span><span class="work-list-title">게임 DA 크리에이티브</span><span class="work-list-type">DA</span></div>
-        <div class="work-list-item"><span class="work-list-num">G06</span><span class="work-list-brand">그랜드체이스</span><span class="work-list-title">게임 DA 광고</span><span class="work-list-type">DA</span></div>
-        <div class="work-list-item"><span class="work-list-num">G07</span><span class="work-list-brand">마블퓨처파이트</span><span class="work-list-title">IP 게임 광고 크리에이티브</span><span class="work-list-type">DA</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CAREER -->
-<section id="career">
-  <div class="container">
-    <div class="section-header reveal">
-      <span class="section-tag">03</span>
-      <h2 class="section-title">CAREER</h2>
-      <div class="section-divider"></div>
-    </div>
-    <div class="career-timeline">
-
-      <div class="career-item reveal">
-        <div class="career-period">2024 — 현재</div>
-        <div class="career-company">AI 모델 스튜디오 제작 참여 / 픽스폴리오 AI 플랫폼</div>
-        <div class="career-role">AI 크리에이티브 디렉터 · AI 플랫폼 기획 참여</div>
-        <div class="career-items">
-          <div class="career-bullet">Generative AI를 활용한 광고 크리에이티브 제작 (Midjourney, Fal, DALL·E)</div>
-          <div class="career-bullet">픽스타입 AI 스튜디오 "픽스폴리오" 국내·글로벌 런칭 프로젝트 참여</div>
-          <div class="career-bullet">AI 기반 크리에이티브 전략 수립 및 REF 제작</div>
-        </div>
-      </div>
-
-      <div class="career-item reveal">
-        <div class="career-period">2022 — 2024</div>
-        <div class="career-company">픽스타임 (FIXTYPE)</div>
-        <div class="career-role">디지털 광고 디자이너 · 크리에이티브 전략</div>
-        <div class="career-items">
-          <div class="career-bullet">삼성자산운용, 현대카드, AXA, 쿠팡풀필먼트 등 대형 클라이언트 DA 광고 제작</div>
-          <div class="career-bullet">크리에이티브 전략 회의 리드 및 경쟁PT 수주</div>
-          <div class="career-bullet">게임 클라이언트 (Com2uS, 게임빌) DA 광고 다수 제작</div>
-          <div class="career-bullet">AI 툴 도입으로 기존 크리에이티브 제작 방식의 표현 한계 확장</div>
-        </div>
-      </div>
-
-      <div class="career-item reveal">
-        <div class="career-period">2018 — 2022</div>
-        <div class="career-company">디지털퍼스트</div>
-        <div class="career-role">디지털 광고 디자이너</div>
-        <div class="career-items">
-          <div class="career-bullet">다양한 업종의 디지털 광고 배너 기획 및 제작</div>
-          <div class="career-bullet">SNS 콘텐츠 광고 크리에이티브 제작</div>
-          <div class="career-bullet">프로모션 페이지 기획 및 디자인</div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="container">
-    <div class="contact-inner reveal">
-      <h2 class="contact-title">더 궁금하시다면<span>.</span></h2>
-      <p class="contact-sub">함께 만들어갈 크리에이티브가 있다면 언제든지 연락주세요.</p>
-      <div class="contact-cards">
-        <a href="mailto:jsw921211@naver.com" class="contact-card">
-          <div class="contact-card-icon">✉</div>
-          <div>
-            <div class="contact-card-label">E-Mail</div>
-            <div class="contact-card-value">jsw921211@naver.com</div>
-          </div>
-        </a>
-        <a href="tel:+821026088070" class="contact-card">
-          <div class="contact-card-icon">📞</div>
-          <div>
-            <div class="contact-card-label">Phone</div>
-            <div class="contact-card-value">010 2608 8070</div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<!-- TOP BUTTON -->
-<a href="#hero" id="top-btn" title="맨 위로">
-  <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-    <path d="M9 14V4M9 4L4 9M9 4L14 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <svg class="wave" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,30 C240,60 480,0 720,25 C960,50 1200,10 1440,35 L1440,60 L0,60 Z" fill="#f4f9f9"/>
   </svg>
-</a>
+</header>
 
-<footer>
-  <div class="footer-left">SEONGWOO JANG · DIGITAL AD PORTFOLIO · 2022-2026</div>
-  <div class="footer-right">jsw921211@naver.com</div>
-</footer>
+<main class="wrap">
+
+  <!-- 항공권 (고정 정보) -->
+  <div class="flights">
+    <div class="flight-card">
+      <div class="airline">
+        <div class="logo logo-tway">t<span class="apos">'</span>way</div>
+        <span class="badge">가는 편</span>
+      </div>
+      <div class="route">
+        <div class="apt">13:00<small>GMP 김포</small></div>
+        <div class="arrow">→</div>
+        <div class="apt">14:15<small>CJU 제주</small></div>
+      </div>
+      <div class="meta">7/22(수) · 직항 1시간 15분</div>
+    </div>
+    <div class="flight-card">
+      <div class="airline">
+        <div class="logo logo-airseoul">AIR SEOUL</div>
+        <span class="badge">오는 편</span>
+      </div>
+      <div class="route">
+        <div class="apt">15:55<small>CJU 제주</small></div>
+        <div class="arrow">→</div>
+        <div class="apt">17:10<small>GMP 김포</small></div>
+      </div>
+      <div class="meta">7/25(토) · 직항 1시간 15분 · 2인 ₩389,990</div>
+    </div>
+  </div>
+
+  <!-- 날짜 탭 -->
+  <div class="tabs" role="tablist" id="tabs"></div>
+
+  <!-- 일정 영역 -->
+  <div id="dayView"></div>
+
+  <!-- 메모 -->
+  <section class="notes">
+    <h2>준비물 · 메모</h2>
+    <textarea id="notes" placeholder="예) 스노클링 장비, 아쿠아슈즈, 자외선 차단제, 렌터카 예약 확인…"></textarea>
+    <div class="hint">입력하면 자동으로 저장돼요. 두 사람 모두 같은 내용을 보게 됩니다.</div>
+  </section>
+
+  <footer>
+    <div class="gull">〜 좋은 여행 되세요 〜</div>
+    수정하면 바로 저장됩니다 · 마지막에 저장한 내용이 남아요
+  </footer>
+</main>
 
 <script>
-  // Loader
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      const loader = document.getElementById('loader');
-      loader.style.opacity = '0';
-      loader.style.transition = 'opacity 0.6s ease';
-      setTimeout(() => loader.style.display = 'none', 600);
-    }, 1200);
+const STORAGE_KEY = "jeju-trip-2026-07";
+const DAYS = [
+  { key:"d1", tab:"22", label:"수요일", title:"7월 22일 (수) — 제주 도착", sub:"14:15 제주공항 도착 후부터" },
+  { key:"d2", tab:"23", label:"목요일", title:"7월 23일 (목) — 온전한 하루", sub:"스노클링 하기 좋은 날" },
+  { key:"d3", tab:"24", label:"금요일", title:"7월 24일 (금) — 온전한 하루", sub:"자유롭게 채워보세요" },
+  { key:"d4", tab:"25", label:"토요일", title:"7월 25일 (토) — 서울로", sub:"15:55 제주공항 출발 · 늦어도 14:30 공항 도착" },
+];
+const CATS = { play:"관광·액티비티", food:"식사·카페", move:"이동", stay:"숙소" };
+const EXP_CATS = ["식사","카페·간식","교통","숙소","액티비티","쇼핑","기타"];
+
+const seed = {
+  d1: [
+    { id:"s1", time:"14:15", cat:"move", title:"제주공항 도착", memo:"렌터카 수령", done:false },
+    { id:"s2", time:"18:00", cat:"food", title:"저녁 식사", memo:"", done:false },
+    { id:"s3", time:"20:00", cat:"stay", title:"숙소 체크인", memo:"", done:false },
+  ],
+  d2: [
+    { id:"s4", time:"09:30", cat:"play", title:"스노클링", memo:"한적한 스팟으로 · 장비 챙기기", done:false },
+    { id:"s5", time:"12:30", cat:"food", title:"점심", memo:"", done:false },
+  ],
+  d3: [],
+  d4: [
+    { id:"s6", time:"11:00", cat:"stay", title:"체크아웃", memo:"", done:false },
+    { id:"s7", time:"14:30", cat:"move", title:"공항 도착 · 렌터카 반납", memo:"", done:false },
+  ],
+};
+
+let state = { days:{d1:[],d2:[],d3:[],d4:[]}, expenses:{d1:[],d2:[],d3:[],d4:[]}, notes:"" };
+let activeDay = "d1";
+let editingId = null;
+
+// ---------- 저장/불러오기 ----------
+let saveTimer = null;
+function scheduleSave(){
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(saveNow, 500);
+}
+async function saveNow(){
+  try{
+    await window.storage.set(STORAGE_KEY, JSON.stringify(state), true);
+    flashSaved();
+  }catch(e){ console.error("저장 실패", e); }
+}
+function flashSaved(){
+  const el = document.getElementById("saveState");
+  el.classList.add("show");
+  setTimeout(()=>el.classList.remove("show"), 1500);
+}
+async function load(){
+  try{
+    const r = await window.storage.get(STORAGE_KEY, true);
+    if(r && r.value){ state = JSON.parse(r.value); }
+    else { state.days = seed; await saveNow(); }
+  }catch(e){
+    state.days = seed;
+    try{ await saveNow(); }catch(_){}
+  }
+  if(!state.days) state.days = seed;
+  if(!state.expenses) state.expenses = {d1:[],d2:[],d3:[],d4:[]};
+  // 예전 3일 버전 데이터 마이그레이션: 마지막 날 일정을 25일로 이동
+  if(!state.days.d4){
+    state.days.d4 = state.days.d3 || [];
+    state.days.d3 = [];
+    await saveNow();
+  }
+  render();
+  document.getElementById("notes").value = state.notes || "";
+}
+
+// ---------- 렌더 ----------
+function render(){
+  renderTabs();
+  renderDay();
+}
+function renderTabs(){
+  const t = document.getElementById("tabs");
+  t.innerHTML = "";
+  DAYS.forEach(d=>{
+    const b = document.createElement("button");
+    b.className = "tab" + (d.key===activeDay?" active":"");
+    b.setAttribute("role","tab");
+    b.innerHTML = `<div class="d">${d.tab}</div><div class="l">${d.label}</div>`;
+    b.onclick = ()=>{ activeDay = d.key; editingId = null; render(); };
+    t.appendChild(b);
   });
+}
+function renderDay(){
+  const day = DAYS.find(d=>d.key===activeDay);
+  const items = (state.days[activeDay]||[]).slice().sort((a,b)=>(a.time||"99").localeCompare(b.time||"99"));
+  const v = document.getElementById("dayView");
 
-  // Reveal on scroll
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-  reveals.forEach(el => observer.observe(el));
+  let html = `<div class="day-title">${day.title}</div><div class="day-sub">${day.sub}</div>`;
+  if(items.length===0){
+    html += `<div class="empty">아직 일정이 없어요. 아래에서 첫 일정을 추가해 보세요.</div>`;
+  }else{
+    html += `<ul class="items">` + items.map(it=>`
+      <li class="item cat-${it.cat} ${it.done?"done":""}">
+        <input type="checkbox" class="chk" ${it.done?"checked":""} onchange="toggleDone('${it.id}')" aria-label="완료 표시">
+        <div class="body">
+          <div class="t-time">${esc(it.time)||"시간 미정"} · ${CATS[it.cat]||""}</div>
+          <div class="t-title">${esc(it.title)}</div>
+          ${it.memo?`<div class="t-memo">${esc(it.memo)}</div>`:""}
+        </div>
+        <div class="ops">
+          <button onclick="startEdit('${it.id}')" aria-label="수정">✏️</button>
+          <button onclick="removeItem('${it.id}')" aria-label="삭제">🗑️</button>
+        </div>
+      </li>`).join("") + `</ul>`;
+  }
 
-  // Filter
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const workCards = document.querySelectorAll('.work-card');
+  const editing = editingId ? items.find(i=>i.id===editingId) : null;
+  html += `
+    <button class="add-btn" id="openForm" onclick="openForm()">＋ 일정 추가</button>
+    <div class="form ${editingId!==null || formOpen ? "open":""}" id="form">
+      <div class="row">
+        <input class="f-time" id="fTime" type="time" value="${editing?esc(editing.time):""}">
+        <select class="f-cat" id="fCat">
+          ${Object.entries(CATS).map(([k,v2])=>`<option value="${k}" ${editing&&editing.cat===k?"selected":""}>${v2}</option>`).join("")}
+        </select>
+        <input class="f-title" id="fTitle" type="text" placeholder="무엇을 하나요?" value="${editing?esc(editing.title):""}">
+      </div>
+      <div class="row">
+        <textarea id="fMemo" placeholder="메모 (장소, 예약번호, 링크 등)">${editing?esc(editing.memo):""}</textarea>
+      </div>
+      <div class="actions">
+        <button class="btn btn-cancel" onclick="closeForm()">취소</button>
+        <button class="btn btn-save" onclick="saveItem()">${editing?"수정 저장":"추가"}</button>
+      </div>
+    </div>`;
 
-  filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const filter = btn.dataset.filter;
-      workCards.forEach(card => {
-        if (filter === 'all' || card.dataset.cat === filter) {
-          card.style.display = '';
-          card.style.opacity = '0';
-          card.style.transform = 'scale(0.95)';
-          setTimeout(() => {
-            card.style.transition = 'opacity 0.3s, transform 0.3s';
-            card.style.opacity = '1';
-            card.style.transform = '';
-          }, 50);
-        } else {
-          card.style.opacity = '0';
-          card.style.transform = 'scale(0.9)';
-          setTimeout(() => card.style.display = 'none', 300);
-        }
-      });
-    });
-  });
+  // ----- 지출 -----
+  const exps = state.expenses[activeDay] || [];
+  const dayTotal = exps.reduce((s,e)=>s+(e.amt||0),0);
+  const tripTotal = Object.values(state.expenses).flat().reduce((s,e)=>s+(e.amt||0),0);
+  html += `
+    <section class="exp">
+      <h2>${day.tab}일 지출</h2>
+      ${exps.length===0
+        ? `<div class="exp-empty">아직 기록한 지출이 없어요.</div>`
+        : `<ul class="exp-list">` + exps.map(e=>`
+            <li class="exp-item">
+              <span class="e-cat">${esc(e.cat)}</span>
+              <span class="e-name">${esc(e.name)}</span>
+              <span class="e-amt">₩${(e.amt||0).toLocaleString()}</span>
+              <button class="del" onclick="removeExp('${e.id}')" aria-label="지출 삭제">✕</button>
+            </li>`).join("") + `</ul>`}
+      <div class="exp-form">
+        <select class="e-f-cat" id="eCat">${EXP_CATS.map(c=>`<option>${c}</option>`).join("")}</select>
+        <input class="e-f-name" id="eName" type="text" placeholder="어디에 썼나요?">
+        <input class="e-f-amt" id="eAmt" type="number" inputmode="numeric" min="0" step="100" placeholder="금액(원)">
+        <button class="btn btn-save" onclick="addExp()">기록</button>
+      </div>
+      <div class="exp-totals">
+        <div class="t-day">오늘 합계 <b>₩${dayTotal.toLocaleString()}</b></div>
+        <div class="t-trip">여행 전체 <b>₩${tripTotal.toLocaleString()}</b></div>
+      </div>
+    </section>`;
+  v.innerHTML = html;
+}
+function esc(s){
+  return String(s??"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
 
-  // Nav scroll effect
-  const nav = document.querySelector('nav');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 80) {
-      nav.style.background = 'rgba(8,10,14,0.95)';
-    } else {
-      nav.style.background = 'rgba(8,10,14,0.85)';
-    }
-  });
+// ---------- 동작 ----------
+let formOpen = false;
+function openForm(){ formOpen = true; editingId = null; renderDay(); document.getElementById("fTitle").focus(); }
+function closeForm(){ formOpen = false; editingId = null; renderDay(); }
+function startEdit(id){ editingId = id; formOpen = false; renderDay(); document.getElementById("fTitle").focus(); }
+function saveItem(){
+  const time = document.getElementById("fTime").value;
+  const cat  = document.getElementById("fCat").value;
+  const title= document.getElementById("fTitle").value.trim();
+  const memo = document.getElementById("fMemo").value.trim();
+  if(!title){ document.getElementById("fTitle").focus(); return; }
+  const list = state.days[activeDay] || (state.days[activeDay]=[]);
+  if(editingId){
+    const it = list.find(i=>i.id===editingId);
+    if(it){ it.time=time; it.cat=cat; it.title=title; it.memo=memo; }
+  }else{
+    list.push({ id:"i"+Date.now(), time, cat, title, memo, done:false });
+  }
+  formOpen=false; editingId=null;
+  renderDay(); scheduleSave();
+}
+function removeItem(id){
+  state.days[activeDay] = (state.days[activeDay]||[]).filter(i=>i.id!==id);
+  if(editingId===id){ editingId=null; }
+  renderDay(); scheduleSave();
+}
+function toggleDone(id){
+  const it = (state.days[activeDay]||[]).find(i=>i.id===id);
+  if(it){ it.done=!it.done; renderDay(); scheduleSave(); }
+}
+function addExp(){
+  const cat = document.getElementById("eCat").value;
+  const name = document.getElementById("eName").value.trim();
+  const amt = parseInt(document.getElementById("eAmt").value, 10);
+  if(!name){ document.getElementById("eName").focus(); return; }
+  if(!amt || amt<=0){ document.getElementById("eAmt").focus(); return; }
+  const list = state.expenses[activeDay] || (state.expenses[activeDay]=[]);
+  list.push({ id:"e"+Date.now(), cat, name, amt });
+  renderDay(); scheduleSave();
+  const nameEl = document.getElementById("eName");
+  if(nameEl) nameEl.focus();
+}
+function removeExp(id){
+  state.expenses[activeDay] = (state.expenses[activeDay]||[]).filter(e=>e.id!==id);
+  renderDay(); scheduleSave();
+}
+document.addEventListener("keydown", e=>{
+  if(e.key==="Enter" && (e.target.id==="eAmt" || e.target.id==="eName")){
+    e.preventDefault(); addExp();
+  }
+});
+document.getElementById("notes").addEventListener("input", e=>{
+  state.notes = e.target.value;
+  scheduleSave();
+});
 
-  // Top button visibility
-  const topBtn = document.getElementById('top-btn');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 400) topBtn.classList.add('visible');
-    else topBtn.classList.remove('visible');
-  });
-
-  // Stagger reveal delays
-  document.querySelectorAll('.career-item.reveal').forEach((el, i) => {
-    el.style.transitionDelay = (i * 0.1) + 's';
-  });
+load();
 </script>
 </body>
 </html>
